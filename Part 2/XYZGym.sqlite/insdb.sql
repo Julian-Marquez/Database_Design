@@ -27,7 +27,7 @@ INSERT INTO Class (className, classType, duration, classCapacity, instructorId, 
 ('Morning Yoga', 'Yoga', 60, 20, 1, 1),
 ('Evening Cardio', 'Cardio', 45, 25, 2, 2),
 ('Strength Training', 'Weight-Lifting', 90, 15, 3, 3),
-('Acrobatics Basics', 'Acrobatics', 75, 10, 4, 4),
+('Acrobatics Basics', 'Acrobats', 75, 10, 4, 4),
 ('Advanced Cardio', 'Cardio', 50, 30, 5, 5);
 
 -- Insert Equipment records
@@ -52,7 +52,7 @@ INSERT INTO Payment (memberId, planId, amountPaid, paymentDate) VALUES
 (5, 2, 200, '2024-05-01');
 
 -- Insert Attendence measures
-INSERT INTO Attendance (memberId, classId, attendanceDate) VALUES
+INSERT INTO Attends (memberId, classId, attendanceDate) VALUES
 (1, 2, '2024-01-03'),
 (2, 4, '2024-04-21'),
 (3, 5, '2024-03-14'),
