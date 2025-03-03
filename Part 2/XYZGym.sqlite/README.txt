@@ -3,6 +3,7 @@ Group Work Division
 Julian Marquez
 1. Created part folders
 2. Completed crtdb.sql
+3. Corrected minor typos in insdb.sql
 
 Isabella Moleski
 1. Created insdb.sql
