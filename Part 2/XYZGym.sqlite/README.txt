@@ -4,6 +4,7 @@ Julian Marquez
 1. Created part folders
 2. Completed crtdb.sql
 3. Corrected minor typos in insdb.sql
+4. Created schemas.pdf
 
 Isabella Moleski
 1. Created insdb.sql
