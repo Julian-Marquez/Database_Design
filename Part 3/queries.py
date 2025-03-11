@@ -79,16 +79,94 @@ def get_expired_members():
     conn.close()
     return expired_members
 
-# Add Functions for Queries 6-10 here
+def get_classes_taught(instructorId):
+    conn = connect_db()  # Always start by connecting to the DB
+    cursor = conn.cursor()
+    
+    query = '''
+    SELECT Instructor.name, Instructor.phone, Class.className, Class.classType, Class.duration, Class.classCapacity
+    FROM Instructor
+    JOIN Class ON Instructor.instructorId = Class.instructorId
+    WHERE Instructor.instructorId = ?;
+    '''
+    
+    cursor.execute(query, (instructorId,))
+    classes_taught = cursor.fetchall()
+    conn.close()
+    
+    return classes_taught
 
+def get_average_age_memberships():
+    conn = connect_db()
+    cursor = conn.cursor()
+    
+    # Query to calculate average age for active and expired memberships
+    query = '''
+    SELECT
+        AVG(CASE WHEN membershipEndDate >= date('now') THEN age ELSE NULL END) AS avg_active_age,
+        AVG(CASE WHEN membershipEndDate < date('now') THEN age ELSE NULL END) AS avg_expired_age
+    FROM Member;
+    '''
+    
+    cursor.execute(query)
+    result = cursor.fetchone()
+    conn.close()
+    return result
+
+def get_top_instructors():
+    conn = connect_db()
+    cursor = conn.cursor()
+    query = '''
+    SELECT Instructor.name, COUNT(Class.classId) AS class_count
+    FROM Instructor
+    JOIN Class ON Instructor.instructorId = Class.instructorId
+    GROUP BY Instructor.instructorId
+    ORDER BY class_count DESC
+    LIMIT 3;
+    '''
+    cursor.execute(query)
+    instructors = cursor.fetchall()
+    conn.close()
+    return instructors
+
+def members_attended_all(class_type):
+    conn = connect_db()
+    cursor = conn.cursor()
+    query = '''
+    SELECT Member.name
+    FROM Member
+    JOIN Attends ON Member.memberId = Attends.memberId
+    JOIN Class ON Attends.classId = Class.classId
+    WHERE Class.classType = ?
+    GROUP BY Member.name
+    HAVING COUNT(DISTINCT Class.classId) = (SELECT COUNT(*) FROM Class WHERE classType = ?);
+    '''
+    cursor.execute(query, (class_type, class_type))
+    members = cursor.fetchall()
+    conn.close()
+    return members
+
+def members_attended_last_month():
+    conn = connect_db()
+    cursor = conn.cursor()
+    query = '''
+    SELECT Member.name, Class.className, Class.classType
+    FROM Member
+    JOIN Attends ON Member.memberId = Attends.memberId
+    JOIN Class ON Attends.classId = Class.classId
+    WHERE Attends.attendanceDate >= date('now', '-1 month');
+    '''
+    cursor.execute(query)
+    members = cursor.fetchall()
+    conn.close()
+    return members
 # Get user input for question number and params
 def main():
 
     if len(sys.argv) < 2:
         print("Please provide a valid question number.")
         return
-    question_number = int(sys.argv[1])
-    # Add some more error handling? 
+    question_number = int(sys.argv[1]) # requiers an integer as an input
 
     if question_number == 1:
         members = get_all_members()
@@ -112,9 +190,37 @@ def main():
         expired_members = get_expired_members()
         for member in expired_members:
             print(member)
-    # Elif statements for Queries 6-10
+    elif question_number == 6 and len(sys.argv) == 3: # paramters are needed for cetain question
+        instructorId = sys.argv[2]
+        classes_taught = get_classes_taught(instructorId)
+        for classes in classes_taught:
+            print(f"Classes Taght: {classes_taught}")
+        
+    elif question_number == 7:
+        average_age = get_average_age_memberships()
+        for age in average_age:
+            average_age = round(age) # round it off
+        print(f"Average age for Active Memberships is {average_age} years old.")
+
+        
+    elif question_number == 8:
+        instructors = get_top_instructors()
+        print("Top 3 instructors: ")
+        for The_best in instructors:
+            print(The_best)
+        
+    elif question_number == 9 and len(sys.argv) == 3:
+        class_type = sys.argv[2]
+        members = members_attended_all(class_type)
+        for member in members:
+            print(member)
+
+    elif question_number == 10:
+        members = members_attended_last_month()
+        for member in members:
+            print(member)
     else:
         print("Invalid input. You have a missing or invalid argument.")
 
-if __name__ == "__main__":
+if __name__ == "__main__": # main 
     main()
