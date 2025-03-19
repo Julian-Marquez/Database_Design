@@ -2,6 +2,7 @@ Group Work Division
 
 Julian Marquez
 1. Continued and finished 6-10 question subprograms in queries.py
+2. Met with instructor
 
 Isabella Moleski
 1. Created queries.py
