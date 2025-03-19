@@ -193,8 +193,8 @@ def main():
     elif question_number == 6 and len(sys.argv) == 3: # paramters are needed for cetain question
         instructorId = sys.argv[2]
         classes_taught = get_classes_taught(instructorId)
-        for classes in classes_taught:
-            print(f"Classes Taght: {classes_taught}")
+        for class_info in classes_taught:
+            print(f"Classes Taught: {class_info}")
         
     elif question_number == 7:
         average_age = get_average_age_memberships()
