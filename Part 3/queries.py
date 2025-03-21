@@ -150,16 +150,20 @@ def members_attended_last_month():
     conn = connect_db()
     cursor = conn.cursor()
     query = '''
-    SELECT Member.name, Class.className, Class.classType
+    SELECT Member.name, COUNT(Attends.classId) AS total_classes, 
+           GROUP_CONCAT(DISTINCT Class.className) AS classes_attended,
+           GROUP_CONCAT(DISTINCT Class.classType) AS class_types
     FROM Member
     JOIN Attends ON Member.memberId = Attends.memberId
     JOIN Class ON Attends.classId = Class.classId
-    WHERE Attends.attendanceDate >= date('now', '-1 month');
+    WHERE Attends.attendanceDate >= date('now', '-1 month')
+    GROUP BY Member.name;
     '''
     cursor.execute(query)
     members = cursor.fetchall()
     conn.close()
     return members
+
 # Get user input for question number and params
 def main():
 
@@ -217,8 +221,14 @@ def main():
 
     elif question_number == 10:
         members = members_attended_last_month()
-        for member in members:
-            print(member)
+        if len(members) > 0: # run only if there is any memebers within that catagory
+            print("Recent Class Attendance:")
+            print("Member Name    Total Classes Attended    Classes Attended     Class Types") # format a table
+            print("=" * 90)
+            for member in members:
+                name, total_classes, attended_classes, class_types = member
+                print(f"{name:<15} {total_classes:<25} {attended_classes:<30} {class_types}")
+
     else:
         print("Invalid input. You have a missing or invalid argument.")
 
