@@ -4,6 +4,7 @@ Julian Marquez
 1. Continued and finished 6-10 question subprograms in queries.py
 2. Met with instructor
 3. Inserted more values into the database
+4. Created Execution.pdf
 
 Isabella Moleski
 1. Created queries.py
