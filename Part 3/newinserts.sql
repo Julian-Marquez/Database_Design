@@ -13,6 +13,6 @@ UPDATE Member SET membershipEndDate = '2026-01-01' WHERE name = 'Bob Brown';
 INSERT INTO Attends (memberId, classId, attendanceDate) VALUES
 (1, 1, '2024-03-15'),
 (1, 6, '2024-03-20'),
-(2, 2, '2024-06-10'), 
-(2, 7, '2024-06-15'), 
-(3, 3, '2025-02-25'); 
+(2, 2, '2025-04-10'), 
+(2, 7, '2025-04-15'), 
+(3, 3, '2025-04-25'); 
