@@ -1,0 +1,772 @@
+/*--------------------------------------------------------------------- File Name: style.css ---------------------------------------------------------------------*/
+
+
+/*--------------------------------------------------------------------- import Fonts ---------------------------------------------------------------------*/
+
+@import url('https://fonts.googleapis.com/css?family=Rajdhani:300,400,500,600,700');
+@import url('https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
+
+/*****---------------------------------------- 1) font-family: 'Rajdhani', sans-serif;
+ 2) font-family: 'Poppins', sans-serif;
+ ----------------------------------------*****/
+
+
+/*--------------------------------------------------------------------- import Files ---------------------------------------------------------------------*/
+
+@import url(animate.min.css);
+@import url(normalize.css);
+@import url(icomoon.css);
+@import url(css/font-awesome.min.css);
+@import url(meanmenu.css);
+@import url(owl.carousel.min.css);
+@import url(swiper.min.css);
+@import url(slick.css);
+@import url(jquery.fancybox.min.css);
+@import url(jquery-ui.css);
+@import url(nice-select.css);
+
+/*--------------------------------------------------------------------- skeleton ---------------------------------------------------------------------*/
+
+* {
+     box-sizing: border-box !important;
+     transition: ease all 0.5s;
+}
+
+html {
+     scroll-behavior: smooth;
+}
+
+body {
+     color: #666666;
+     font-size: 14px;
+     font-family: Poppins;
+     line-height: 1.80857;
+     font-weight: normal;
+     overflow-x: hidden;
+}
+
+a {
+     color: #1f1f1f;
+     text-decoration: none !important;
+     outline: none !important;
+     -webkit-transition: all .3s ease-in-out;
+     -moz-transition: all .3s ease-in-out;
+     -ms-transition: all .3s ease-in-out;
+     -o-transition: all .3s ease-in-out;
+     transition: all .3s ease-in-out;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+     letter-spacing: 0;
+     font-weight: normal;
+     position: relative;
+     padding: 0 0 10px 0;
+     font-weight: normal;
+     line-height: normal;
+     color: #111111;
+     margin: 0
+}
+
+h1 {
+     font-size: 24px
+}
+
+h2 {
+     font-size: 22px
+}
+
+h3 {
+     font-size: 18px
+}
+
+h4 {
+     font-size: 16px
+}
+
+h5 {
+     font-size: 14px
+}
+
+h6 {
+     font-size: 13px
+}
+
+*,
+*::after,
+*::before {
+     -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+     box-sizing: border-box;
+}
+
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a {
+     color: #212121;
+     text-decoration: none!important;
+     opacity: 1
+}
+
+button:focus {
+     outline: none;
+}
+
+ul,
+li,
+ol {
+     margin: 0px;
+     padding: 0px;
+     list-style: none;
+}
+
+p {
+     margin: 20px;
+     font-weight: 300;
+     font-size: 15px;
+     line-height: 24px;
+}
+
+a {
+     color: #222222;
+     text-decoration: none;
+     outline: none !important;
+}
+
+a,
+.btn {
+     text-decoration: none !important;
+     outline: none !important;
+     -webkit-transition: all .3s ease-in-out;
+     -moz-transition: all .3s ease-in-out;
+     -ms-transition: all .3s ease-in-out;
+     -o-transition: all .3s ease-in-out;
+     transition: all .3s ease-in-out;
+}
+
+img {
+     max-width: 100%;
+     height: auto;
+}
+
+ :focus {
+     outline: 0;
+}
+
+.paddind_bottom_0 {
+     padding-bottom: 0 !important;
+}
+
+.btn-custom {
+     margin-top: 20px;
+     background-color: transparent !important;
+     border: 2px solid #ddd;
+     padding: 12px 40px;
+     font-size: 16px;
+}
+
+.lead {
+     font-size: 18px;
+     line-height: 30px;
+     color: #767676;
+     margin: 0;
+     padding: 0;
+}
+
+.form-control:focus {
+     border-color: #ffffff !important;
+     box-shadow: 0 0 0 .2rem rgba(255, 255, 255, .25);
+}
+
+.navbar-form input {
+     border: none !important;
+}
+
+.badge {
+     font-weight: 500;
+}
+
+blockquote {
+     margin: 20px 0 20px;
+     padding: 30px;
+}
+
+button {
+     border: 0;
+     margin: 0;
+     padding: 0;
+     cursor: pointer;
+}
+
+.full {
+     float: left;
+     width: 100%;
+}
+
+.layout_padding {
+     padding-top: 90px;
+     padding-bottom: 0px;
+}
+
+.padding_0{
+     padding: 0px;
+}
+
+
+.header_section {
+    width: 100%;
+    float: left;
+    background-image: url(../images/banner_bg.png);
+    height: auto;
+    background-size: 100%;
+}
+
+.image_1 {
+    width: 100%;
+    float: left;
+    background-image: url(../images/gymBackround.jpeg);
+    padding: 330px 0px;
+    height: auto;
+    background-size:cover;
+}
+
+.header_main {
+    width: 80%;
+    float: right;
+    padding: 40px 0px;
+}
+
+.header_left{
+     width: 30%;
+     float: left;
+}
+
+.header_right {
+    width: 70%;
+    float: left;
+}
+
+.logo{
+     width: 100%;
+     float: left;
+}
+
+.menu_main {
+    width: 100%;
+    float: left;
+}
+
+.menu_main ul {
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+}
+
+.menu_main li {
+    float: left;
+    font-size: 18px;
+    color: #fefeff;
+    padding-left: 9px;
+    font-weight: 600;
+}
+
+.menu_main li a {
+    color: #fefeff;
+}
+
+.menu_main li a:hover {
+    color: #000000;
+}
+
+.banner_section{
+    width: 82%;
+    float: right;
+}
+
+h1.request_text {
+    width: 100%;
+    float: left;
+    font-size: 36px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.mail_main {
+    width: 70%;
+    float: left;
+    height: auto;
+    /* margin-top: 30px; */
+}
+
+.email-bt {
+    background: transparent;
+    border: none;
+    color: #fff;
+    width: 100%;
+    height: 60px;
+    font-size: 16px;
+    border-bottom: 1px solid #ffffff;
+}
+
+.massage-bt {
+    background: transparent;
+    border: none;
+    color: #fff;
+    width: 100%;
+    height: 75px;
+    font-size: 16px;
+    padding: 20px;
+    border-bottom: 1px solid #ffffff;
+    padding-left: 0px;
+}
+
+.send_btn {
+    width: 100%;
+    float: left;
+    text-align: right;
+    padding-top: 30px;
+}
+
+.main_bt {
+    width: 100%;
+    float: left;
+}
+
+.main_bt a {
+    background: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+    height: 50px;
+    font-size: 18px;
+    width: 90%;
+    float: left;
+    text-align: center;
+    padding-top: 5px;
+    border-radius: 30px;
+}
+
+.main_bt a:hover{
+     color: #000;
+}
+
+input.email-bt::placeholder {
+    color: #ffffff;
+}
+
+textarea#comment.massage-bt::placeholder {
+    color: #ffffff;
+}
+
+.video_text {
+    width: 100%;
+    float: left;
+    font-size: 38px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.play_icon {
+    width: 90%;
+    float: right;
+    /* padding-left: 70px; */
+}
+
+.about_text{
+     width: 100%;
+     float: left;
+     font-size: 50px;
+     color: #1a1a1a;
+     font-weight: bold;
+}
+
+.about_section{
+     width: 100%;
+     float: left;
+}
+
+.about_taital {
+    width: 100%;
+    float: left;
+    font-size: 16px;
+    color: #4f4f4f;
+    margin-left: 0px;
+    padding-top: 45px;
+}
+
+.read_bt {
+    width: 35%;
+    float: left;
+    margin-top: 45px;
+}
+
+.read_bt a {
+    background: transparent;
+    border: 3px solid #03a1e5;
+    color: #4f4f4f;
+    height: 50px;
+    font-size: 18px;
+    width: 90%;
+    float: left;
+    text-align: center;
+    padding-top: 5px;
+    border-radius: 30px;
+}
+
+.read_bt a:hover{
+     color: #03a1e5;
+}
+
+.image_2{
+     width: 100%;
+     float: left;
+}
+
+.services_section {
+    width: 100%;
+    float: left;
+}
+
+.services_text {
+    width: 100%;
+    float: left;
+    font-size: 50px;
+    text-align: center;
+    color: #188ce6;
+    padding-top: 6px;
+    font-weight: bold;
+}
+
+.what_text {
+    width: 100%;
+    float: left;
+    font-size: 20px;
+    color: #4f4f4f;
+    text-align: center;
+    font-weight: 500;
+    margin: 0px;
+}
+
+.box_main {
+    width: 100%;
+    float: left;
+    padding: 80px 0px;
+    background-color: #000;
+    border-radius: 15px;
+}
+
+.box_main:hover {
+    background-color: #188ce6;
+    border-radius: 15px;
+}
+
+.box_main.box-active {
+    background-color: #188ce6;
+    border-radius: 15px;
+}
+
+
+.icon_2 {
+    width: 100%;
+    float: left;
+    text-align: center;
+}
+
+.box_main:hover h2 {
+    color: #fff;
+}
+.storage_text {
+    width: 100%;
+    float: left;
+    font-size: 40px;
+    color: #fdfdfe;
+    text-align: center;
+    padding-top: 20px;
+    font-weight: 600;
+}
+
+.box_main:hover p {
+    color: #fff;
+}
+
+.dummy_text {
+    width: 100%;
+    float: left;
+    font-size: 16px;
+    color: #4b4b4c;
+    text-align: center;
+    margin-left: 0px;
+    padding-top: 20px;
+}
+
+.achivement_section {
+    width: 100%;
+    float: left;
+    background-image: url(../images/banner_bg.png);
+    height: auto;
+    background-size: 100%;
+    padding-bottom: 90px;
+    margin-top: 90px;
+}
+
+.out_text{
+    width: 100%;
+    float: left;
+    font-size: 40px;
+    color: #fdfdfe;
+    padding-top: 20px;
+    font-weight: 600;
+}
+
+.most_taital {
+    width: 76%;
+    float: left;
+    font-size: 26px;
+    color: #fefeff;
+    margin-left: 0px;
+    line-height: 50px;
+}
+
+.read_bt_main {
+    width: 35%;
+    float: left;
+    margin-top: 45px;
+}
+
+.read_bt_main a {
+    background: transparent;
+    border: 3px solid #ffffff;
+    color: #ffffff;
+    height: 50px;
+    font-size: 18px;
+    width: 90%;
+    float: left;
+    text-align: center;
+    padding-top: 5px;
+    border-radius: 30px;
+}
+
+.read_bt_main a:hover{
+     color: #000;
+}
+
+.client_main{
+     width: 100%;
+     float: left;
+}
+
+.client_left {
+    width: 48%;
+    float: left;
+    margin-left: 10px;
+    background-color: #ffffff;
+    height: auto;
+    padding: 40px 0px;
+    border-radius: 15px;
+}
+
+.client_right {
+    width: 48%;
+    float: left;
+    margin-left: 10px;
+    background-color: #ffffff;
+    height: auto;
+    padding: 40px;
+    border-radius: 15px;
+}
+
+.number_taital {
+    width: 100%;
+    float: left;
+    font-size: 30px;
+    text-align: center;
+    color: #2d78e6;
+    font-weight: 600;
+}
+
+.explainer_taital {
+    width: 100%;
+    float: left;
+    font-size: 24px;
+    text-align: center;
+    color: #252526;
+    margin: 0px 0px 15px 0px;
+    font-weight: 600;
+}
+
+.award_win {
+    width: 100%;
+    float: left;
+    margin-left: 10px;
+    background-color: #ffffff;
+    height: auto;
+    padding: 40px;
+    border-radius: 15px;
+    margin-top: 34px;
+}
+
+.award_main{
+     width: 50%;
+     margin: 0 auto;
+     text-align: center;
+}
+
+.Testimonial_sectin{
+     width: 100%;
+     float: left;
+}
+
+.Testimonial_sectin_2 {
+    width: 70%;
+    margin: 0 auto;
+    border: 5px solid #188ce6;
+    padding: 40px 35px 0px 40px;
+    display: grid;
+}
+
+.mark_text {
+    width: 100%;
+    float: left;
+    font-size: 40px;
+    color: #2f2f2f;
+    text-align: center;
+    font-weight: 600;
+    padding-top: 20px;
+}
+
+.Testimonial_main {
+    width: 100%;
+    float: left;
+    padding-top: 90px;
+}
+
+.ipsum_text {
+    width: 100%;
+    float: left;
+    font-size: 16px;
+    color: #000000;
+    text-align: center;
+    margin-left: 0px;
+    padding-top: 30px;
+}
+
+.icon_main{
+     width: 100%;
+     float: left;
+}
+
+.icon_left {
+    width: 50%;
+    float: left;
+    position: relative;
+    top: -100px;
+    left: -11%;
+}
+
+.icon_right {
+    width: 50%;
+    float: left;
+    position: relative;
+    top: -100px;
+    left: 51%;
+}
+
+.footer_section{
+     width: 100%;
+     float: left;
+     background-color: #2c2d2d;
+     height: auto;
+     padding-bottom: 90px;
+     margin-top: 90px;
+}
+
+.company_text {
+    width: 100%;
+    float: left;
+    font-size: 40px;
+    color: #ffffff;
+    padding-bottom: 20px;
+}
+
+.footer_menu{
+     width: 100%;
+     float: left;
+}
+
+.footer_menu ul{
+     margin: 0px;
+     padding: 0px; 
+}
+
+.footer_menu li{
+     font-size: 16px;
+     color: #ffffff;
+}
+
+.footer_menu li a{
+     color: #ffffff;
+}
+.footer_menu li a:hover{
+     color: #1194e5;
+}
+
+.footer_text {
+    width: 39%;
+    float: left;
+    font-size: 16px;
+    color: #ffffff;
+    margin-left: 0px;
+    margin-top: 0;
+}
+
+
+.footer_social_icon{
+     width: 100%;
+     float: left;
+
+}
+.footer_social_icon li{
+     float: left;
+     padding-right: 10px;
+}
+
+.free_text {
+    width: 100%;
+    float: left;
+    font-size: 26px;
+    color: #ffffff;
+    font-weight: 600;
+    padding-top: 5px;
+}
+
+.copyright{
+     width: 100%;
+     float: left;
+     background-color: #188ce6;
+     height: auto;
+}
+
+.copyright_text{
+     width: 100%;
+     float: left;
+     font-size: 16px;
+     text-align: center;
+     margin-left: 0px;
+     color: #ffffff;
+}
+
+.copyright_text a{
+     color: #ffffff;
+}
+
+.copyright_text a:hover{
+     color: #000;
+}
+
