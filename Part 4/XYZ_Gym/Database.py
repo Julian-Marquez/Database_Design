@@ -20,7 +20,7 @@ class Database: # Made a dedicated database class for simplicity
         members = cursor.fetchall()
         allMembers = []
         for m in members:
-            member = Member(m[0],m[1],m[2],m[3],m[4],m[5])
+            member = Member(m[0],m[1],m[2],m[3],m[4],m[5],m[6],m[7])
             allMembers.append(member)
 
         return allMembers
@@ -132,3 +132,45 @@ class Database: # Made a dedicated database class for simplicity
             print(f"Member ID: {attend[0]}, Class ID: {attend[1]}, Attendance Date: {attend[2]}")
 
         return attendance
+
+    def update_member(self, member: Member):
+        try:
+            with sqlite3.connect("XYZGym.sqlite") as conn:
+                cursor = conn.cursor()
+                query = '''
+                UPDATE Member
+                SET name = ?, email = ?, phone = ?, address = ?, age = ?, membershipStartDate = ?, membershipEndDate = ?
+                WHERE memberId = ?;
+                '''
+                cursor.execute(query, (
+                    member.name,
+                    member.email,
+                    member.phone,
+                    member.address,
+                    int(member.age),
+                    member.startDate,
+                    member.endDate,
+                    member.id
+                ))
+                conn.commit()
+                print(f"update succesful")
+                return True
+        except sqlite3.Error as e:
+            print(f"SQLite Error: {e}")
+            return False
+
+    def deleteMember(self, member: Member):
+        try:
+            with sqlite3.connect("XYZGym.sqlite") as conn:
+                cursor = conn.cursor()
+                query = '''
+                DELETE FROM Member
+                WHERE memberId = ?;
+                '''
+                cursor.execute(query, (member.id,))
+                conn.commit()
+                return True
+        except sqlite3.Error as e:
+            print(f"SQLite Error during delete: {e}")
+            return False
+
