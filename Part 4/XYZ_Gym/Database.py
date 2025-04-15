@@ -20,7 +20,8 @@ class Database: # Made a dedicated database class for simplicity
         members = cursor.fetchall()
         allMembers = []
         for m in members:
-            member = Member(m[0],m[1],m[2],m[3],m[4],m[5],m[6],m[7])
+            member = Member(m[1],m[2],m[3],m[4],m[5],m[6],m[7])
+            member.id = m[0]
             allMembers.append(member)
 
         return allMembers
@@ -69,8 +70,9 @@ class Database: # Made a dedicated database class for simplicity
         allClasses = []
         
         for _class in classes:
-
-            allClasses.append(Class(_class[0],_class[1], _class[2],_class[3],_class[4],_class[5],_class[6]))
+            class_ = Class(_class[1], _class[2],_class[3],_class[4],_class[5],_class[6])
+            class_.classId = _class[0]
+            allClasses.append(class_)
         
         return allClasses
 
@@ -133,6 +135,54 @@ class Database: # Made a dedicated database class for simplicity
 
         return attendance
 
+
+    def insert_member(self, member: Member):
+        try:
+            conn = self.connect
+            cursor = conn.cursor()
+            query = '''
+            INSERT INTO Member (name, email, phone, address, age, membershipStartDate, membershipEndDate)
+            VALUES (?, ?, ?, ?, ?, ?, ?);
+            '''
+            cursor.execute(query, (
+                member.name,
+                member.email,
+                member.phone,
+                member.address,
+                int(member.age),
+                member.startDate,
+                member.endDate
+            ))
+            conn.commit()
+            print("Member inserted successfully.")
+            return True
+        except sqlite3.Error as e:
+            print(f"SQLite Error: {e}")
+            return False
+
+    def insert_class(self, _class: Class):
+        try:
+            conn = self.connect
+            cursor = conn.cursor()
+            query = '''
+            INSERT INTO Class (className, classType, duration, classCapacity, instructorId, gymId)
+            VALUES (?, ?, ?, ?, ?, ?);
+            '''
+            cursor.execute(query, (
+               _class.className,
+               _class.classType,
+               _class.duration,
+               _class.classCapacity,
+               _class.instructorId,
+               _class.gymId
+            ))
+            conn.commit()
+            print("Member inserted successfully.")
+            return True
+        except sqlite3.Error as e:
+            print(f"SQLite Error: {e}")
+            return False
+
     def update_member(self, member: Member):
         try:
             with sqlite3.connect("XYZGym.sqlite") as conn:
@@ -159,6 +209,32 @@ class Database: # Made a dedicated database class for simplicity
             print(f"SQLite Error: {e}")
             return False
 
+    def update_class(self,_class : Class):
+        try:
+            with sqlite3.connect("XYZGym.sqlite") as conn:
+                cursor = conn.cursor()
+                query = '''
+                UPDATE Class
+                SET className = ?, classType = ?, duration = ?, classCapacity = ?, instructorId = ?, gymId = ?
+                WHERE classId = ?;
+                '''
+                cursor.execute(query, (
+                    _class.className,
+                    _class.classType,
+                    _class.duration,
+                    _class.classCapacity,
+                    _class.instructorId,
+                    _class.gymId,
+                    _class.classId
+                ))
+                conn.commit()
+                print(f"update succesful")
+                return True
+        except sqlite3.Error as e:
+            print(f"SQLite Error: {e}")
+            return False
+
+
     def deleteMember(self, member: Member):
         try:
             with sqlite3.connect("XYZGym.sqlite") as conn:
@@ -168,6 +244,21 @@ class Database: # Made a dedicated database class for simplicity
                 WHERE memberId = ?;
                 '''
                 cursor.execute(query, (member.id,))
+                conn.commit()
+                return True
+        except sqlite3.Error as e:
+            print(f"SQLite Error during delete: {e}")
+            return False
+
+    def deleteClass(self, _class: Class):
+        try:
+            with sqlite3.connect("XYZGym.sqlite") as conn:
+                cursor = conn.cursor()
+                query = '''
+                DELETE FROM Class
+                WHERE classId = ?;
+                '''
+                cursor.execute(query, (_class.classId,))
                 conn.commit()
                 return True
         except sqlite3.Error as e:

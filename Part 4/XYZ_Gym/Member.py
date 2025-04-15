@@ -1,8 +1,8 @@
 import datetime
 
 class Member:
-    def __init__(self,id,name,email,phone,address,age,startDate,endDate):
-        self.id = id
+    def __init__(self,name,email,phone,address,age,startDate,endDate):
+        self.id = 0
         self.name = name
         self.email = email
         self.phone = phone
@@ -10,5 +10,3 @@ class Member:
         self.age = age
         self.startDate = startDate
         self.endDate = endDate
-
-

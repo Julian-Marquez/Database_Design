@@ -14,11 +14,62 @@ app.secret_key = 'your_secret_key'
 def addMember():
 
     fName = request.form.get('firstName')
-    lName = request.form.grt('lastName')
+    lName = request.form.get('lastName')
     email = request.form.get('email')
     phone = request.form.get('phone')
+    age = request.form.get('age')
+    address  = request.form.get('address')
+    startDate = request.form.get('startDate')
+    endDate = request.form.get('endDate')
 
-    print('data received for now: ' + fName + ' ' + lName + ' ' + email + ' ' + phone)
+    member = Member(f"{fName} {lName}",email,phone,address,age,startDate,endDate)
+
+    Database().insert_member(member)
+
+    return render_template('membersMenu.html',members = Database().get_all_members())
+
+
+@app.route("/addClass",methods = ['POST'])
+def addClass():
+
+    name = request.form.get('name')
+    classType = request.form.get('classType')
+    duration = request.form.get('duration')
+    capacity = request.form.get('capacity')
+    instructorId = request.form.get('instructorId')
+    gymId = request.form.get('gymId')
+
+    _class = Class(name,classType,duration,capacity,instructorId,gymId)
+
+    Database().insert_class(_class)
+
+    return render_template('classMenu.html',classes = Database().get_all_classes())
+
+
+
+@app.route("/handleClasses",methods = ['POST'])
+def handleClasses():
+
+    action = request.form.get('action')
+    classId = request.form.get('classId')
+
+    allGyms = Database().get_all_gym_facilities()
+    allInstructors  = Database().get_all_instructors()
+
+    if action == 'addClass': # this saves time, check before running any loops
+        return render_template('addClass.html',instructors = allInstructors,facilities = allGyms) 
+
+    else:
+        _class = None
+        for class_ in Database().get_all_classes():
+            if int(class_.classId) == int(classId):
+                _class = class_
+
+        if action == 'remove':
+            Database().deleteClass(_class)
+            return render_template('classMenu.html',classes = Database().get_all_classes())
+        else:
+            return render_template('editClass.html',eClass = _class,instructors = allInstructors,facilities = allGyms )
 
 
 @app.route("/")
@@ -34,7 +85,7 @@ def members():
 
 @app.route("/classes")
 def classes():
-    return render_template("classMenu.html")
+    return render_template("classMenu.html",classes = Database().get_all_classes(),facilities = Database().get_all_gym_facilities())
 
 @app.route("/equipemnet")
 def equipemnet():
@@ -48,7 +99,7 @@ def handleMembers():
     action = request.form.get('action') #remove button
     memberId = request.form.get('memberId') # member's ID
 
-    if action == 'remove': # tester for now 
+    if action == 'remove': 
         for member in Database().get_all_members():
             if int(memberId) == int(member.id):
                 Database().deleteMember(member)
@@ -101,6 +152,42 @@ def editMember():
         Database().update_member(editMember)
 
     return render_template("membersMenu.html",members = Database().get_all_members())
+
+
+@app.route("/editClass",methods = ['POST'])
+def editClass():
+
+    classId = request.form.get('classId')
+    name = request.form.get('name')
+    classType = request.form.get('classType')
+    duration = request.form.get('duration')
+    capacity = request.form.get('capacity')
+    instructorId = request.form.get('instructorId')
+    gymId = request.form.get('gymId')
+
+    eClass = None
+
+    for _class in Database().get_all_classes():
+        if _class.classId == int(classId):
+            eClass = _class
+
+    if name:
+        eClass.className = name
+    if classType:
+        eClass.classType = classType
+    if duration:
+        eClass.duration = duration
+    if capacity:
+        eClass.classCapacity = capacity
+    if instructorId:
+        eClass.instructorId = instructorId
+    if gymId:
+        eClass.gymId = gymId
+
+    Database().update_class(eClass)
+
+    return render_template('classMenu.html',classes = Database().get_all_classes())
+
 
 if __name__ == '__main__':
     app.run(debug=True)
