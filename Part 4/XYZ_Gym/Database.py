@@ -4,6 +4,8 @@ from Member import Member
 from Class import Class
 from Instructor import Instructor
 from GymFacility import GymFacility
+from Equipment import Equipment
+from Attendance import Attendance
 
 class Database: # Made a dedicated database class for simplicity
     def __init__(self):
@@ -21,7 +23,12 @@ class Database: # Made a dedicated database class for simplicity
         allMembers = []
         for m in members:
             member = Member(m[1],m[2],m[3],m[4],m[5],m[6],m[7])
+            member.classes = self.get_classes_by_member_id(m[0])
             member.id = m[0]
+            for _class in member.classes:
+                member_attendance = self.get_attendance_by_class_and_member(_class.classId, member.id)
+                member.attendance.extend(member_attendance) 
+            
             allMembers.append(member)
 
         return allMembers
@@ -87,7 +94,9 @@ class Database: # Made a dedicated database class for simplicity
         allEquipment = []
         
         for equip in equipment:
-            allEquipment.append(equip[0],equip[1],equip[2],equip[3],equip[4])
+            addequipment = Equipment(equip[1],equip[2],equip[3],equip[4])
+            addequipment.id = equip[0]
+            allEquipment.append(addequipment)
         
         return allEquipment
 
@@ -129,12 +138,50 @@ class Database: # Made a dedicated database class for simplicity
         '''
         cursor.execute(query)
         attendance = cursor.fetchall()
-        
+        attends = []
+
         for attend in attendance:
-            print(f"Member ID: {attend[0]}, Class ID: {attend[1]}, Attendance Date: {attend[2]}")
+            attend_date = Attendance(attend[0],attend[1],attend[2])
+            attends.append(attend_date)
 
-        return attendance
+        return attends
+    def get_attendance_by_class_and_member(self, class_id, member_id):
+        conn = self.connect
+        cursor = conn.cursor()
+        query = '''
+        SELECT memberId, classId, attendanceDate
+        FROM Attends
+        WHERE classId = ? AND memberId = ?;
+        '''
+        cursor.execute(query, (class_id, member_id))
+        attendance = cursor.fetchall()
+        filtered_attendance = []
 
+        for attend in attendance:
+            attend_date = Attendance(attend[0], attend[1], attend[2])
+            filtered_attendance.append(attend_date)
+
+        return filtered_attendance
+
+    def get_classes_by_member_id(self, member_id):
+        conn = self.connect
+        cursor = conn.cursor()
+        query = '''
+        SELECT c.classId, c.className, c.classType, c.duration, c.classCapacity, c.instructorId, c.gymId
+        FROM Class c
+        INNER JOIN Attends a ON c.classId = a.classId
+        WHERE a.memberId = ?;
+        '''
+        cursor.execute(query, (member_id,))
+        results = cursor.fetchall()
+        
+        class_list = []
+        for row in results:
+            class_obj = Class(row[1], row[2], row[3], row[4], row[5], row[6])  # Assuming constructor: Class(name, type, duration, capacity, instructorId, gymId)
+            class_obj.classId = row[0]  # Assign the ID manually
+            class_list.append(class_obj)
+
+        return class_list
 
     def insert_member(self, member: Member):
         try:
@@ -182,6 +229,22 @@ class Database: # Made a dedicated database class for simplicity
         except sqlite3.Error as e:
             print(f"SQLite Error: {e}")
             return False
+
+    def insert_attendance(self, class_id, member_id, attendance_date):
+        try:
+            conn = self.connect
+            cursor = conn.cursor()
+            query = '''
+            INSERT INTO Attends (classId, memberId, attendanceDate)
+            VALUES (?, ?, ?);
+            '''
+            
+            cursor.execute(query, (class_id, member_id, attendance_date))
+            conn.commit()
+            print("Attendance record inserted successfully.")
+        except sqlite3.Error as e:
+            print(f"Failed to insert attendance: {e}")
+
 
     def update_member(self, member: Member):
         try:

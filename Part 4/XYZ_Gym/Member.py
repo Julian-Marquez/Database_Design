@@ -10,3 +10,5 @@ class Member:
         self.age = age
         self.startDate = startDate
         self.endDate = endDate
+        self.classes = []
+        self.attendance = []

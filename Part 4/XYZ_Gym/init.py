@@ -3,8 +3,10 @@ from Member import Member
 from Class import Class
 from Instructor import Instructor
 from GymFacility import GymFacility
+from Attendance import Attendance
 from Database import Database
 from datetime import datetime
+from Equipment import Equipment
 import pickle
 
 app = Flask(__name__)
@@ -76,6 +78,11 @@ def handleClasses():
 def index():
     return render_template("index.html")
 
+@app.route("/attendence")
+def attendance():
+    classColors = ['color-green', 'color-blue', 'color-indigo', 'color-purple', 'color-teal', 'color-pink']
+    return render_template('attendence.html',attendance = Database().get_all_attendance(),classColors = classColors)
+
 @app.route("/members")
 def members():
     connect = Database()
@@ -99,13 +106,20 @@ def handleMembers():
     action = request.form.get('action') #remove button
     memberId = request.form.get('memberId') # member's ID
 
+    member = None
+
+    for member_ in Database().get_all_members():
+        if int(memberId) == int(member_.id):
+            member = member_
+
     if action == 'remove': 
-        for member in Database().get_all_members():
-            if int(memberId) == int(member.id):
-                Database().deleteMember(member)
-                return render_template("membersMenu.html",members = Database().get_all_members())
+        Database().deleteMember(member)
+        return render_template("membersMenu.html",members = Database().get_all_members())
     elif action == 'addMember':
         return render_template('addMember.html')
+    elif action == 'attends':
+        classColors = ['color-green', 'color-blue', 'color-indigo', 'color-purple', 'color-teal', 'color-pink']
+        return render_template('attendence.html',attendance = member.attendance,classColors = classColors)
     else:
         for member_to_edit in Database().get_all_members():
             if member_to_edit.id == int(memberId):
@@ -198,22 +212,10 @@ if __name__ == '__main__':
     classes = connect.get_all_classes()
     instructors = connect.get_all_instructors()
     facilities = connect.get_all_gym_facilities()
+    attendence = connect.get_all_attendance()
 
+   # members_attends = [] # this should record all the members dates
+    member = members[3]
 
-    for member in members:
-        print(member.name)
-
-    print('\n')
-
-    for _class in classes:
-        print(_class.duration)
-
-    for instructor in instructors:
-        print(instructor.specialty)
-
-    print('\n')
-
-    for facility in facilities:
-        print(facility.location)
-
-
+    for attend in member.attendance:
+        print(f"{attend.classId} {attend.date}")

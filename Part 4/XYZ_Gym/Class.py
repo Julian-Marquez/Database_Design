@@ -1,3 +1,4 @@
+from Attendance import Attendance
 class Class:
     def __init__(self,className, classType, duration, classCapacity, instructorId, gymId):
         self.classId = 0
@@ -7,3 +8,4 @@ class Class:
         self.classCapacity = classCapacity  
         self.instructorId = instructorId 
         self.gymId = gymId 
+        self.attendence = []
