@@ -145,6 +145,24 @@ class Database: # Made a dedicated database class for simplicity
             attends.append(attend_date)
 
         return attends
+
+    def get_all_equipment(self):
+        conn = self.connect
+        cursor = conn.cursor()
+        query = '''
+        SELECT equipmentId, name, type, quantity, gymId FROM Equipment;
+        '''
+        cursor.execute(query)
+        equipment = cursor.fetchall()
+        allEquipment = []
+
+        for equip in equipment:
+            addEquipment = Equipment(equip[1],equip[2],equip[3],equip[4])
+            addEquipment.id = equip[0]
+            allEquipment.append(addEquipment)
+
+        return allEquipment
+
     def get_attendance_by_class_and_member(self, class_id, member_id):
         conn = self.connect
         cursor = conn.cursor()
@@ -328,3 +346,17 @@ class Database: # Made a dedicated database class for simplicity
             print(f"SQLite Error during delete: {e}")
             return False
 
+    def deleteEquipment(self, equipmentId):
+            try:
+                with sqlite3.connect("XYZGym.sqlite") as conn:
+                    cursor = conn.cursor()
+                    query = '''
+                    DELETE FROM Equipment
+                    WHERE equipmentId = ?;
+                    '''
+                    cursor.execute(query, (equipmentId,))
+                    conn.commit()
+                    return True
+            except sqlite3.Error as e:
+                print(f"SQLite Error during delete: {e}")
+                return False

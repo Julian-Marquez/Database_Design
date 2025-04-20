@@ -12,6 +12,20 @@ import pickle
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
+@app.route("/menu",methods=['POST'])
+def menu():
+
+    action = request.form.get('action')
+
+    if action == 'members':
+        return render_template('membersMenu.html',members = Database().get_all_members())
+    elif action == 'classes':
+        return render_template('classMenu.html',classes = Database().get_all_classes(),facilities = Database().get_all_gym_facilities())
+    elif action == 'equipment':
+        return render_template("equipment.html",equipemnet = Database().get_all_equipment())
+    else:
+        classColors = ['color-green', 'color-blue', 'color-indigo', 'color-purple', 'color-teal', 'color-pink']
+        return render_template('attendence.html',attendance = Database().get_all_attendance(),classColors = classColors)
 @app.route('/addMember', methods=['POST'])
 def addMember():
 
@@ -94,9 +108,9 @@ def members():
 def classes():
     return render_template("classMenu.html",classes = Database().get_all_classes(),facilities = Database().get_all_gym_facilities())
 
-@app.route("/equipemnet")
-def equipemnet():
-    return render_template("equipment.html")
+@app.route("/equipment")
+def equipment():
+    return render_template("equipment.html",equipemnet = Database().get_all_equipment())
 
 
 @app.route("/handleMembers",methods=['POST'])
@@ -127,6 +141,26 @@ def handleMembers():
 
     return render_template("membersMenu.html",members = Database().get_all_members())
 
+
+@app.route("/handleEquipment",methods=['POST'])
+def handleEquipment():
+
+    equipmentId = request.form.get('id')
+    action = request.form.get('action')
+
+    if action == 'add':
+        return render_template('addEquipment.html')
+    elif action == "remove":
+            Database().deleteEquipment(equipmentId)
+            return render_template('equipment.html',equipment = Database().get_all_equipment())
+    else:
+        equip = None
+        for _equip in Database().get_all_equipment():
+            if int(_equip.id) == int(equipmentId):
+                equip = _equip 
+                
+        return render_template('editEquipment.html',equipment = Database().get_all_equipment() )
+        
         
     
 @app.route("/editMember",methods=['POST'])
@@ -216,6 +250,11 @@ if __name__ == '__main__':
 
    # members_attends = [] # this should record all the members dates
     member = members[3]
+
+    equipemnet = connect.get_all_equipment()
+
+    for equip in equipemnet:
+        print(f"id: {equip.id} gymID: {equip.gymId} name: {equip.name} type: {equip.type} quaninity: {equip.quantity}")
 
     for attend in member.attendance:
         print(f"{attend.classId} {attend.date}")
