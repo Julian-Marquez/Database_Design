@@ -880,3 +880,100 @@ textarea#comment.massage-bt::placeholder {
     5% { opacity:1; transform:translateY(1.5rem) scale(0.4);}
     10%,100%{ opacity:0;  transform:translateY(3rem) scale(0.2);}
   }
+  @import url("https://pro.fontawesome.com/releases/v6.0.0-beta1/css/all.css");
+  @import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;700&display=swap");
+  
+  .attendance-section *,
+  .attendance-section *::before,
+  .attendance-section *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .attendance-section {
+    --color: rgba(30, 30, 30);
+    --bgColor: rgba(245, 245, 245);
+    min-height: 100vh;
+    display: grid;
+    align-content: center;
+    gap: 2rem;
+    padding: 2rem;
+    font-family: "Exo 2", sans-serif;
+    color: var(--color);
+    background: var(--bgColor);
+  }
+  
+  .attendance-section h1 {
+    text-align: center;
+  }
+  
+  .attendance-section ol {
+    width: min(60rem, 90%);
+    margin-inline: auto;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    list-style: none;
+  }
+  
+  /* Colored border & icon setup */
+  .attendance-section li.color-green  { --accent-color: #b8df4e; }
+  .attendance-section li.color-blue   { --accent-color: #4cbccb; }
+  .attendance-section li.color-indigo { --accent-color: #7197d3; }
+  .attendance-section li.color-purple { --accent-color: #ae78cb; }
+  .attendance-section li.color-teal   { --accent-color: #7dc7a4; }
+  .attendance-section li.color-pink   { --accent-color: #f078c2; }
+  
+  .attendance-section ol li {
+    counter-increment: stepnr;
+    width: 18rem;
+    --borderS: 2rem;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: calc(var(--borderS) + 2rem);
+    position: relative;
+  }
+  
+  .attendance-section ol li::before,
+  .attendance-section ol li::after {
+    inset: 0;
+    position: absolute;
+    border-radius: 50%;
+    border: var(--borderS) solid var(--accent-color);
+    line-height: 1.1;
+  }
+  
+  .attendance-section ol li::before {
+    content: "";
+  }
+  
+  .attendance-section ol li::after {
+    content: "";
+    filter: drop-shadow(-0.25rem 0.25rem 0.0675rem rgba(0, 0, 0, 0.75)) blur(5px);
+  }
+  
+  .attendance-section ol li > * {
+    width: 7.5rem;
+  }
+  
+  .attendance-section ol li .icon {
+    font-size: 2rem;
+    color: var(--accent-color);
+    text-align: center;
+  }
+  
+  .attendance-section ol li .title {
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--accent-color);
+  }
+  
+  .attendance-section ol li .descr {
+    font-size: 0.8rem;
+    font-weight: 300;
+  }
+  
