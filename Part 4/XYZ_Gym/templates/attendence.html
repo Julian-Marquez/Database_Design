@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Attendance - XYZ Gym</title>
+    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/responsive.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+</head>
+
+<header class="header_section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 padding_0">
+                <div class="header_main">
+                    <div class="header_left">
+                        <div class="logo">
+                            <a href="/"><img src="static/images/logo.png" alt="Logo"></a>
+                        </div>
+                    </div>
+                    <div class="header_right">
+                        <div class="menu_main">
+                            <ul>
+                                <li><a href="/members">Members</a></li>
+                                <li><a href="/classes">Classes</a></li>
+                                <li><a href="/equipment">Equipment</a></li>
+                                <li><a class="active" href="#">Attendance</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</header>
+<body >
+
+<!-- Header -->
+
+<div class="attendance-section">
+    <h1>Attendance</h1>
+    <ol id="attendance-list">
+        {% if classColors %}
+        {% for attend in attendance %}
+          <li class="{{ classColors[loop.index0 % classColors|length] }}">
+            <div class="title {{ classColors[loop.index0 % classColors|length] }}">{{ attend.date }}</div>
+            <div class="descr">Member Id: {{ attend.memberId }}</div>
+            <div class="descr">Class Id: {{ attend.classId }}</div>
+          </li>
+        {% endfor %}
+      {% else %}
+        <p>No colors available</p>
+      {% endif %}
+      </ol>
+</div>
+
+<div class="footer_section layout_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-lg-4">
+                <h1 class="company_text">XYZ Gym</h1>
+                <div class="footer_menu">
+                    <ul>
+                        <li><a href="memberMenu.html">Members Menu</a></li>
+                        <li><a href="classMenu.html">Class Menu</a></li>
+                        <li><a href="equipment.html">Equipment Menu</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-4">
+            
+                <h1 class="free_text"></h1>
+                <h1 class="free_text">2025<br>The XYZ Gym </h1>
+            </div>
+        </div>
+    </div>
+  </div>
+    </body>
+</html>
