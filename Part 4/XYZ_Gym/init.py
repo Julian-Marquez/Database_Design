@@ -9,6 +9,8 @@ from datetime import datetime
 from Equipment import Equipment
 import pickle
 
+# XYZ Gym Started By Julian Marquez
+
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
@@ -237,24 +239,8 @@ def editClass():
     return render_template('classMenu.html',classes = Database().get_all_classes())
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == '__main__':# main 
+    app.run(debug=True) 
 
-    connect = Database()
 
-    members = connect.get_all_members()
-    classes = connect.get_all_classes()
-    instructors = connect.get_all_instructors()
-    facilities = connect.get_all_gym_facilities()
-    attendence = connect.get_all_attendance()
-
-   # members_attends = [] # this should record all the members dates
-    member = members[3]
-
-    equipemnet = connect.get_all_equipment()
-
-    for equip in equipemnet:
-        print(f"id: {equip.id} gymID: {equip.gymId} name: {equip.name} type: {equip.type} quaninity: {equip.quantity}")
-
-    for attend in member.attendance:
-        print(f"{attend.classId} {attend.date}")
+  
