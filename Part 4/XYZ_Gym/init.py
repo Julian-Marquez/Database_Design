@@ -24,7 +24,7 @@ def menu():
     elif action == 'classes':
         return render_template('classMenu.html',classes = Database().get_all_classes(),facilities = Database().get_all_gym_facilities())
     elif action == 'equipment':
-        return render_template("equipment.html",equipemnet = Database().get_all_equipment())
+        return render_template("equipment.html",equipment = Database().get_all_equipment())
     else:
         classColors = ['color-green', 'color-blue', 'color-indigo', 'color-purple', 'color-teal', 'color-pink']
         return render_template('attendence.html',attendance = Database().get_all_attendance(),classColors = classColors)
@@ -46,7 +46,6 @@ def addMember():
 
     return render_template('membersMenu.html',members = Database().get_all_members())
 
-
 @app.route("/addClass",methods = ['POST'])
 def addClass():
 
@@ -63,7 +62,23 @@ def addClass():
 
     return render_template('classMenu.html',classes = Database().get_all_classes())
 
+@app.route("/addEquipment", methods=['GET'])
+def show_add_equipment_form():
+    return render_template('addEquipment.html')
 
+@app.route("/addEquipment", methods=['POST'])
+def addEquipment():
+    name = request.form.get('name')
+    equipmentType = request.form.get('type')
+    quantity = request.form.get('quantity')
+    gymId = request.form.get('gymId')
+
+    if Database().insert_equipment(name, equipmentType, quantity, gymId):
+        print("Equipment inserted successfully.")
+    else:
+        print("Failed to insert equipment.")
+
+    return render_template('equipment.html', equipment=Database().get_all_equipment())
 
 @app.route("/handleClasses",methods = ['POST'])
 def handleClasses():
@@ -112,7 +127,7 @@ def classes():
 
 @app.route("/equipment")
 def equipment():
-    return render_template("equipment.html",equipemnet = Database().get_all_equipment())
+    return render_template("equipment.html",equipment = Database().get_all_equipment())
 
 
 @app.route("/handleMembers",methods=['POST'])
@@ -144,26 +159,48 @@ def handleMembers():
     return render_template("membersMenu.html",members = Database().get_all_members())
 
 
-@app.route("/handleEquipment",methods=['POST'])
+@app.route("/handleEquipment", methods=['POST'])
 def handleEquipment():
-
     equipmentId = request.form.get('id')
     action = request.form.get('action')
+
+    # Debugging output
+    print(f"Handling equipment: action={action}, id={equipmentId}")
 
     if action == 'add':
         return render_template('addEquipment.html')
     elif action == "remove":
-            Database().deleteEquipment(equipmentId)
-            return render_template('equipment.html',equipment = Database().get_all_equipment())
+        print(f"Attempting to delete equipment with ID: {equipmentId}")
+        if Database().deleteEquipment(equipmentId):
+            print("Delete successful!")
+        else:
+            print("Delete failed.")
+        return render_template('equipment.html', equipment=Database().get_all_equipment())
+    elif action == "update":  # Check if it's an update action
+        name = request.form.get('name')
+        type_ = request.form.get('type')
+        quantity = request.form.get('quantity')
+        gymId = request.form.get('gymId')
+
+        print(f"Updating equipment: {name}, {type_}, {quantity}, {gymId}")
+
+        success = Database().updateEquipment(equipmentId, name, type_, quantity, gymId)
+        
+        if success:
+            print("Update successful!")
+        else:
+            print("Update failed.")
+        
+        # Reload the equipment page after updating
+        return render_template('equipment.html', equipment=Database().get_all_equipment())
+
     else:
         equip = None
         for _equip in Database().get_all_equipment():
             if int(_equip.id) == int(equipmentId):
-                equip = _equip 
-                
-        return render_template('editEquipment.html',equipment = Database().get_all_equipment() )
-        
-        
+                equip = _equip
+
+        return render_template('editEquipment.html', equipment=equip)
     
 @app.route("/editMember",methods=['POST'])
 def editMember():

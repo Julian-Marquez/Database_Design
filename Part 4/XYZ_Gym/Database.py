@@ -247,6 +247,23 @@ class Database: # Made a dedicated database class for simplicity
         except sqlite3.Error as e:
             print(f"SQLite Error: {e}")
             return False
+    
+    def insert_equipment(self, name: str, type_: str, quantity: int, gymId: int):
+        try:
+            conn = self.connect
+            cursor = conn.cursor()
+            query = '''
+            INSERT INTO Equipment (name, type, quantity, gymId)
+            VALUES (?, ?, ?, ?);
+            '''
+            cursor.execute(query, (name, type_, quantity, gymId))
+            conn.commit()  # Ensure this is here to commit the transaction
+            print("Equipment inserted successfully.")
+            return True
+        except sqlite3.Error as e:
+            print(f"SQLite Error: {e}")
+            conn.rollback()  # Make sure to roll back in case of an error
+            return False
 
     def insert_attendance(self, class_id, member_id, attendance_date):
         try:
@@ -315,6 +332,28 @@ class Database: # Made a dedicated database class for simplicity
             print(f"SQLite Error: {e}")
             return False
 
+    def updateEquipment(self, equipmentId, name, type_, quantity, gymId):
+        try:
+            conn = self.connect
+            cursor = conn.cursor()
+            query = '''
+            UPDATE Equipment
+            SET name = ?, type = ?, quantity = ?, gymId = ?
+            WHERE equipmentId = ?;
+            '''
+            cursor.execute(query, (
+                name,
+                type_,
+                quantity,
+                gymId,
+                equipmentId
+            ))
+            conn.commit()
+            print(f"Equipment update successful.")
+            return True
+        except sqlite3.Error as e:
+            print(f"SQLite Error: {e}")
+            return False
 
     def deleteMember(self, member: Member):
         try:
