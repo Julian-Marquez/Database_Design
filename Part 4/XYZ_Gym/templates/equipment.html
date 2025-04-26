@@ -62,6 +62,13 @@
 </div>
 <!-- Header Section End -->
 
+<!-- Button to open the Add Equipment form -->
+<form action="/addEquipment" method="GET">
+  <!-- Form fields for adding equipment go here -->
+  <button type="submit">Add Equipment</button>
+</form>
+
+
 <!-- Equipment Listing Section -->
 <div class="services_section layout_padding">
   <div class="container">
@@ -69,7 +76,7 @@
     <div class="row">
       <!-- Card 1 -->
       
-       {% for equip in equipemnet  %}
+       {% for equip in equipment  %}
        
        <div class="col-md-4">
         <div class="equipment-card">
@@ -81,7 +88,7 @@
           <div class="voltage-button">
             <form action="/handleEquipment" method="POST">       
             <input type="hidden" name="id" value="{{equip.id}}">                   
-            <button value="remove" name="action">Delete</button>
+            <button type="submit" name="action" value="remove">Delete</button>
             
             <!-- SVG Party -->
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 234.6 61.3" preserveAspectRatio="none" xml:space="preserve">

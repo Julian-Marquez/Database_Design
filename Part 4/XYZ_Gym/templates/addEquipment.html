@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Add Equipment - XYZ Gym</title>
+    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/responsive.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header_section">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6 padding_0">
+                    <div class="header_main">
+                        <div class="header_left">
+                            <div class="logo"><a href=""><img src="static/images/logo.png" alt="Logo"></a></div>
+                        </div>
+                        <div class="header_right">
+                            <div class="menu_main">
+                                <ul>
+                                    <li><a class="active" href="#">Members</a></li>
+                                    <li><a href="/classes">Classes</a></li>
+                                    <li><a href="/equipment">Equipment</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                     </div>
+                    </div>
+                </div>
+            </div>
+
+                    <!-- Member Menu Section -->
+                    <form action="/addEquipment" method="POST">
+                        <input type="text" name="name" placeholder="Equipment Name" required>
+                        <input type="text" name="type" placeholder="Equipment Type" required>
+                        <input type="number" name="quantity" placeholder="Quantity" required>
+                        <input type="number" name="gymId" placeholder="Gym ID" required>
+                        <button type="submit">Add Equipment</button>
+                    </form>
+                    
+
+
+   
+   
+
+    <!-- Footer -->
+    <div class="footer_section layout_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-lg-4">
+                    <h1 class="company_text">XYZ Gym</h1>
+                    <ul class="footer_menu">
+                        <li><a href="memberMenu.html">Members Menu</a></li>
+                        <li><a href="classMenu.html">Class Menu</a></li>
+                        <li><a href="equipment.html">Equipment Menu</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-12 col-lg-4">
+                    <h1 class="free_text">2025<br>The XYZ Gym</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="copyright">
+        <div class="container">
+            <p class="copyright_text">Copyright 2023 All Right Reserved By. <a href="#">The XYZ Gym</a></p>
+        </div>
+    </div>
+</body>
+</html>
