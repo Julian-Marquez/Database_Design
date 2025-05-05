@@ -15,6 +15,11 @@ def load_credentials():
     with open('credentials.json', 'r') as file:
         return json.load(file)
 
+# XYZ Gym Started By Julian Marquez
+
+app = Flask(__name__)
+app.secret_key = 'your_secret_key'
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     #skip login if already logged in
@@ -41,11 +46,6 @@ def logout():
     session.pop('admin_logged_in', None)
     session.pop('username', None)
     return redirect(url_for('login'))
-
-# XYZ Gym Started By Julian Marquez
-
-app = Flask(__name__)
-app.secret_key = 'your_secret_key'
 
 @app.route("/menu",methods=['POST'])
 def menu():
