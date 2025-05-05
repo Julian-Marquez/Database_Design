@@ -10,3 +10,4 @@ Hannah Knight
 - Met with professor
 - Successfully implemented login/logout
 - Developed outline for and led group presentation
+- Reviewed project functionality and repaired broken links etc
