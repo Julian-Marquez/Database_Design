@@ -32,6 +32,7 @@ def login():
         password = request.form.get('password')
 
         if username == credentials.get('username') and password == credentials.get('password'):
+            flash("Login successful. Redirecting...")
             session['admin_logged_in'] = True
             session['username'] = username
             return redirect(url_for('index'))
