@@ -3,6 +3,7 @@ Julian Marquez
 with the overall theme.Made some backend database 
 methods and structure of project for this stage.
 Isabella Moleski
+- Added CRUD Functionality for Equipment
 - Created execution PDF
 Hannah Knight
 - Met with professor
