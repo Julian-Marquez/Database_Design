@@ -31,7 +31,7 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        if username == creds.get('username') and password == creds.get('password'):
+        if username == credentials.get('username') and password == credentials.get('password'):
             session['admin_logged_in'] = True
             session['username'] = username
             return redirect(url_for('index'))
