@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, session
+from flask import Flask, request, render_template, session, redirect, url_for, flash
 from Member import Member
 from Class import Class
 from Instructor import Instructor
@@ -8,6 +8,39 @@ from Database import Database
 from datetime import datetime
 from Equipment import Equipment
 import pickle
+import json
+
+# Logic for logging in
+def load_credentials():
+    with open('credentials.json', 'r') as file:
+        return json.load(file)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    #skip login if already logged in
+    if session.get('admin_logged_in'):
+        return redirect(url_for('index'))
+
+    if request.method == 'POST':
+        credentials = load_credentials()
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        if username == creds.get('username') and password == creds.get('password'):
+            session['admin_logged_in'] = True
+            session['username'] = username
+            return redirect(url_for('index'))
+        else:
+            flash("Your login information didn't match anything in our system. Please try again.")
+            return render_template('login.html')
+            
+    return render_template(login.html)
+
+@app.route('/logout')
+def logout():
+    session.pop('admin_logged_in', None)
+    session.pop('username', None)
+    return redirect(url_for('login'))
 
 # XYZ Gym Started By Julian Marquez
 
@@ -16,6 +49,8 @@ app.secret_key = 'your_secret_key'
 
 @app.route("/menu",methods=['POST'])
 def menu():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('login'))
 
     action = request.form.get('action')
 
@@ -28,8 +63,11 @@ def menu():
     else:
         classColors = ['color-green', 'color-blue', 'color-indigo', 'color-purple', 'color-teal', 'color-pink']
         return render_template('attendence.html',attendance = Database().get_all_attendance(),classColors = classColors)
+        
 @app.route('/addMember', methods=['POST'])
 def addMember():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('login'))
 
     fName = request.form.get('firstName')
     lName = request.form.get('lastName')
@@ -48,6 +86,8 @@ def addMember():
 
 @app.route("/addClass",methods = ['POST'])
 def addClass():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('login'))
 
     name = request.form.get('name')
     classType = request.form.get('classType')
@@ -64,10 +104,14 @@ def addClass():
 
 @app.route("/addEquipment", methods=['GET'])
 def show_add_equipment_form():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('login'))
     return render_template('addEquipment.html')
 
 @app.route("/addEquipment", methods=['POST'])
 def addEquipment():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('login'))
     name = request.form.get('name')
     equipmentType = request.form.get('type')
     quantity = request.form.get('quantity')
@@ -82,6 +126,8 @@ def addEquipment():
 
 @app.route("/handleClasses",methods = ['POST'])
 def handleClasses():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('login'))
 
     action = request.form.get('action')
     classId = request.form.get('classId')
@@ -111,11 +157,15 @@ def index():
 
 @app.route("/attendence")
 def attendance():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('login'))
     classColors = ['color-green', 'color-blue', 'color-indigo', 'color-purple', 'color-teal', 'color-pink']
     return render_template('attendence.html',attendance = Database().get_all_attendance(),classColors = classColors)
 
 @app.route("/members")
 def members():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('login'))
     connect = Database()
 
     #members = connect.get_all_members()
@@ -123,16 +173,21 @@ def members():
 
 @app.route("/classes")
 def classes():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('login'))
     return render_template("classMenu.html",classes = Database().get_all_classes(),facilities = Database().get_all_gym_facilities())
 
 @app.route("/equipment")
 def equipment():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('login'))
     return render_template("equipment.html",equipment = Database().get_all_equipment())
 
 
 @app.route("/handleMembers",methods=['POST'])
 def handleMembers():
-
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('login'))
     # both have the same value (memberId) but depending on the one chosen will redirect the 
     action = request.form.get('action') #remove button
     memberId = request.form.get('memberId') # member's ID
@@ -164,6 +219,8 @@ def handleMembers():
 
 @app.route("/handleEquipment", methods=['POST'])
 def handleEquipment():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('login'))
     equipmentId = request.form.get('id')
     action = request.form.get('action')
 
@@ -207,7 +264,8 @@ def handleEquipment():
     
 @app.route("/editMember",methods=['POST'])
 def editMember():
-
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('login'))
     memberId = request.form.get('memberId')
     name = request.form.get('name')
     email = request.form.get('email')
@@ -246,7 +304,8 @@ def editMember():
 
 @app.route("/editClass",methods = ['POST'])
 def editClass():
-
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('login'))
     classId = request.form.get('classId')
     name = request.form.get('name')
     classType = request.form.get('classType')
