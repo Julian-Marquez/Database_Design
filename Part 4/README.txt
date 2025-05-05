@@ -6,3 +6,4 @@ Isabella Moleski
 - Created execution PDF
 Hannah Knight
 - Met with professor
+- Developed outline for and led group presentation
