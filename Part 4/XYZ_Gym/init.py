@@ -137,6 +137,9 @@ def handleMembers():
     action = request.form.get('action') #remove button
     memberId = request.form.get('memberId') # member's ID
 
+    if action == 'addMember':
+        return render_template('addMember.html')
+
     member = None
 
     for member_ in Database().get_all_members():
